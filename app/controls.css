@@ -1,0 +1,68 @@
+.glass {
+  --mx: 50%;
+  --my: 0%;
+  position: relative;
+  background: var(--glass);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  backdrop-filter: blur(22px) saturate(160%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .38), inset 0 -1px 0 rgb(255 255 255 / .06), 0 24px 70px rgb(4 0 24 / .5);
+  overflow: hidden;
+}
+.glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(420px circle at var(--mx) var(--my), rgb(255 255 255 / .16), transparent 60%);
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+.glass:hover::before { opacity: 1; }
+
+.osu-button {
+  --skew: -10deg;
+  position: relative;
+  display: inline-flex;
+  border: 0;
+  padding: 0;
+  background: none;
+  transform: skewX(var(--skew));
+  transition: transform .22s var(--snap), filter .22s ease;
+  filter: drop-shadow(0 10px 20px rgb(139 92 255 / .45));
+}
+.osu-button > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 34px;
+  border-radius: 14px;
+  background: var(--hot);
+  border: 2px solid rgb(255 255 255 / .75);
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: .06em;
+  transform: skewX(calc(var(--skew) * -1));
+  position: relative;
+  overflow: hidden;
+}
+.osu-button > span::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 -60%;
+  width: 40%;
+  background: linear-gradient(100deg, transparent, rgb(255 255 255 / .55), transparent);
+  transform: skewX(-20deg);
+  transition: left .6s var(--ease);
+}
+.osu-button:hover { transform: skewX(var(--skew)) translateY(-3px) scale(1.05); filter: drop-shadow(0 14px 26px rgb(255 95 168 / .5)); }
+.osu-button:hover > span::after { left: 130%; }
+.osu-button:active { transform: skewX(var(--skew)) translateY(1px) scale(.95); transition-duration: .08s; }
+.osu-button.small > span, .osu-small > span { padding: 8px 20px; font-size: .9rem; }
+.osu-button.ghost { filter: none; }
+.osu-button.ghost > span { background: rgb(255 255 255 / .1); border-color: var(--line); color: var(--soft); backdrop-filter: blur(10px); }
+.osu-button.ghost:hover > span { background: rgb(255 255 255 / .2); color: #fff; }
+.osu-button:disabled { opacity: .5; cursor: not-allowed; }
+
+.osu-small { --skew: -8deg; }
